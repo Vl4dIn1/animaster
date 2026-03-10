@@ -71,21 +71,29 @@ function animaster() {
      * @param element — HTMLElement, который надо анимировать
      * @param duration — Продолжительность анимации в миллисекундах
      */
-     function moveAndHide(element, duration){
+    function moveAndHide(element, duration){
         move(element, duration * 2/5, {x: 100, y: 20})
     
         setTimeout(function() {
             fadeOut(element, duration * 3/5);
         }, duration * 2/5);
         }
+    
+    function showAndHide(element, duration) {
+        fadeIn(element, duration * 1/3);
+        setTimeout(function() {
+            fadeOut(element, duration * 1/3);
+        }, duration * 1/3);
+    }
 
+    
     return {
         fadeIn,
         fadeOut,
         move,
         scale,
         moveAndHide,
-
+        showAndHide
     };
 }
 
