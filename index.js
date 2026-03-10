@@ -86,14 +86,23 @@ function animaster() {
         }, duration * 1/3);
     }
 
-    
+    function heartBeating(element) {
+        while (true) {
+        scale(element, 500, 1.4);
+        setTimeout(function() {
+            scale(element, 500, 1);
+        }, 500);
+        }
+    }
+
     return {
         fadeIn,
         fadeOut,
         move,
         scale,
         moveAndHide,
-        showAndHide
+        showAndHide,
+        heartBeating
     };
 }
 
