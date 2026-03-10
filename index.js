@@ -166,6 +166,11 @@ function animaster() {
         element.style.transitionDuration = null;
     }
 
+    function addDelay(duration) {
+        this._steps.push({ name: 'delay', duration });
+        return this;
+    }
+
     return {
         _steps: [],
         
@@ -185,6 +190,7 @@ function animaster() {
             this._steps.push({ name: 'fadeOut', duration });
             return this;
         },
+        addDelay,
         
         play: function(element) {
             let delay = 0;
@@ -202,6 +208,9 @@ function animaster() {
                     }
                     if (step.name === 'scale') {
                         scaleCore(element, step.duration, step.ratio);
+                    }
+                    if (step.name === 'delay') {
+                        return;
                     }
                 }, delay);
 
