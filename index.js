@@ -145,13 +145,21 @@ function animaster() {
         },
         addDelay,
         
+        buildHandler: function() {
+            const context = this;
+            return function() {
+                context.play(this);
+            };
+        },
+
         play: function(element, cycled = false) {
             const steps = [...this._steps];
+            let timerIds = [];
 
             const stepLogic = () => {
                 let currentDelay = 0;
                 steps.forEach((step) => {
-                    setTimeout(() => {
+                    const timerId = setTimeout(() => {
                         if (step.name === 'move') {
                             moveCore(element, step.duration, step.translation);
                         }
@@ -165,6 +173,7 @@ function animaster() {
                             scaleCore(element, step.duration, step.ratio);
                         }
                     }, currentDelay);
+                    timerIds.push(timerId);
     
                     currentDelay += step.duration;
                 });
@@ -172,25 +181,39 @@ function animaster() {
             };
 
             const totalDuration = stepLogic();
-            let timerId = null;
+            let intervalId = null;
 
             if (cycled) {
-                timerId = setInterval(stepLogic, totalDuration);
+                intervalId = setInterval(() => {
+                    timerIds = [];
+                    stepLogic();
+                }, totalDuration);
             }
 
             return {
                 stop: function() {
-                    if (timerId) {
-                        clearInterval(timerId);
+                    if (intervalId) {
+                        clearInterval(intervalId);
                     }
+                    timerIds.forEach(id => clearTimeout(id));
                 },
                 reset: function() {
-                    if (timerId) {
-                        clearInterval(timerId);
+                    if (intervalId) {
+                        clearInterval(intervalId);
                     }
-                    resetMoveAndScale(element);
-                    resetFadeOut(element);
-                    resetFadeIn(element);
+                    timerIds.forEach(id => clearTimeout(id));
+                    
+                    steps.slice().reverse().forEach(step => {
+                        if (step.name === 'fadeIn') {
+                            resetFadeIn(element);
+                        }
+                        if (step.name === 'fadeOut') {
+                            resetFadeOut(element);
+                        }
+                        if (step.name === 'move' || step.name === 'scale') {
+                            resetMoveAndScale(element);
+                        }
+                    });
                 }
             };
         },
