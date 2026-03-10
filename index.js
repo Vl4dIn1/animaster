@@ -87,8 +87,7 @@ function animaster() {
      * @param translation — объект с полями x и y, обозначающими смещение блока
      */
     function move(element, duration, translation) {
-        element.style.transitionDuration = `${duration}ms`;
-        element.style.transform = getTransform(translation, null);
+        return this.addMove(duration, translation).play(element);
     }
 
     /**
