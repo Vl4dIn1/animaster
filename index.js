@@ -73,14 +73,11 @@ function animaster() {
      */
      function moveAndHide(element, duration){
         move(element, duration * 2/5, {x: 100, y: 20})
-        function moveAndHide(element, duration) {
-    move(element, duration * 2/5, {x: 100, y: 20});
     
-    setTimeout(function() {
-        fadeOut(element, duration * 3/5);
-    }, duration * 2/5);
-}
-    }
+        setTimeout(function() {
+            fadeOut(element, duration * 3/5);
+        }, duration * 2/5);
+        }
 
     return {
         fadeIn,
