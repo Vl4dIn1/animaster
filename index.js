@@ -135,6 +135,12 @@ function animaster() {
         element.style.transitionDuration = null;
     }
 
+    function play(element, animation) { pass}
+
+    function addMove(element) { 
+        pass
+    }
+    
     return {
         fadeIn,
         fadeOut,
@@ -142,7 +148,9 @@ function animaster() {
         scale,
         moveAndHide,
         showAndHide,
-        heartBeating
+        heartBeating,
+        addMove,
+        play
     };
 }
 
