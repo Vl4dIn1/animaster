@@ -1,4 +1,11 @@
 addListeners();
+class Step {
+    constructor(name, duration, params = {}) {
+        this.name = name;        
+        this.duration = duration; 
+        this.params = params;     
+    }
+}
 
 function addListeners() {
     document.getElementById('fadeInPlay')
@@ -27,6 +34,7 @@ function addListeners() {
 }
 
 function animaster() {
+    
     /**
      * Блок плавно появляется из прозрачного.
      * @param element — HTMLElement, который надо анимировать
@@ -135,13 +143,36 @@ function animaster() {
         element.style.transitionDuration = null;
     }
 
-    function play(element, animation) { pass}
+    function play(element) {
+        let delay = 0;
 
-    function addMove(element) { 
-        pass
+        this._steps.forEach((step) => {
+            setTimeout(() => {
+                if (step.name === 'move') {
+                    move(element, step.duration, step.params.translation);
+                }
+                if (step.name === 'fadeIn') {
+                    fadeIn(element, step.duration);
+                }
+                if (step.name === 'fadeOut') {
+                    fadeOut(element, step.duration);
+                }
+                if (step.name === 'scale') {
+                    scale(element, step.duration, step.params.ratio);
+                }
+            }, delay);
+
+            delay += step.duration;
+        });
+    }
+
+    function addMove(duration, translation) {
+        this._steps.push(new Step('move', duration, {translation}));
+        return this;
     }
     
     return {
+        _steps: [],
         fadeIn,
         fadeOut,
         move,
