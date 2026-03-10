@@ -25,11 +25,34 @@ function addListeners() {
             const block = document.getElementById('scaleBlock');
             animaster().scale(block, 1000, 1.25);
         });
-    
-    document.getElementById('stop')
+
+    let heartBeatingLogic;
+
+    document.getElementById('heartBeatingPlay')
         .addEventListener('click', function () {
-            const block = document.getElementById('stopBlock');
-            animaster().stop(block);
+            const block = document.getElementById('heartBeatingBlock');
+            heartBeatingLogic = animaster().heartBeating(block);
+        });
+    
+     document.getElementById('heartBeatingStop')
+        .addEventListener('click', function () {
+            if (heartBeatingLogic) {
+                heartBeatingLogic.stop();
+            }
+        });
+    
+    let moveAndHideResetLogic;
+    document.getElementById('moveAndHidePlay')
+        .addEventListener('click', function () {
+            const block = document.getElementById('moveAndHideBlock');
+            moveAndHideResetLogic = animaster().moveAndHide(block, 1000); 
+        });
+
+    document.getElementById('moveAndHideReset')
+        .addEventListener('click', function () {
+            if (moveAndHideResetLogic){
+                moveAndHideResetLogic.reset(); 
+            }
         });
 }
 
