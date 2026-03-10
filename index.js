@@ -32,6 +32,11 @@ function animaster() {
         element.classList.add('show');
     }
 
+    /**
+     * Блок плавно исчезает.
+     * @param element — HTMLElement, который надо анимировать
+     * @param duration — Продолжительность анимации в миллисекундах
+     */
     function fadeOut(element, duration) {
     element.style.transitionDuration = `${duration}ms`;
     element.classList.remove('show');
@@ -60,10 +65,30 @@ function animaster() {
         element.style.transform = getTransform(null, ratio);
     }
 
+
+    /**
+     * Функция, блок двигается и исчезает потом
+     * @param element — HTMLElement, который надо анимировать
+     * @param duration — Продолжительность анимации в миллисекундах
+     */
+     function moveAndHide(element, duration){
+        move(element, duration * 2/5, {x: 100, y: 20})
+        function moveAndHide(element, duration) {
+    move(element, duration * 2/5, {x: 100, y: 20});
+    
+    setTimeout(function() {
+        fadeOut(element, duration * 3/5);
+    }, duration * 2/5);
+}
+    }
+
     return {
         fadeIn,
+        fadeOut,
         move,
-        scale
+        scale,
+        moveAndHide,
+
     };
 }
 
