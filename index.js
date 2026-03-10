@@ -18,6 +18,12 @@ function addListeners() {
             const block = document.getElementById('scaleBlock');
             animaster().scale(block, 1000, 1.25);
         });
+    
+    document.getElementById('stop')
+        .addEventListener('click', function () {
+            const block = document.getElementById('stopBlock');
+            animaster().stop(block);
+        });
 }
 
 function animaster() {
