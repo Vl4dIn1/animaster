@@ -87,12 +87,21 @@ function animaster() {
     }
 
     function heartBeating(element) {
-        while (true) {
-        scale(element, 500, 1.4);
-        setTimeout(function() {
-            scale(element, 500, 1);
-        }, 500);
+        function beat() {
+            scale(element, 500, 1.4);
+            setTimeout(function () {
+                scale(element, 500, 1);
+            }, 500);
         }
+
+        beat();
+        const timerId = setInterval(beat, 1000);
+
+        return {
+            stop() {
+                clearInterval(timerId);
+            }
+        };
     }
 
     return {
